@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YinYang Store | FiveM Scriptleri & Discord Botları</title>
+  <meta name="description" content="YinYang Store - FiveM scriptleri, Discord botları ve web sistemleri.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2309090b' stroke='%23ffffff' stroke-width='4'/><path d='M50 2 A48 48 0 0 1 50 98 A24 24 0 0 1 50 50 A24 24 0 0 0 50 2 Z' fill='%23ffffff'/><circle cx='50' cy='26' r='7' fill='%2309090b'/><circle cx='50' cy='74' r='7' fill='%23ffffff'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div id="cursor-glow"></div>
+  <div id="scroll-progress"></div>
+
+
+
+  <!-- ÜST BAR -->
+  <div class="topbar">
+    <div class="container topbar-in">
+      <div class="live">
+        <span class="dot"></span>
+        <span>Canlı ziyaretçi</span>
+        <b id="live-count">–</b>
+      </div>
+      <div class="topbar-right">
+        <a class="toplink" href="https://discord.gg/dheWzDWCDZ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> discord.gg/dheWzDWCDZ</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-in">
+      <a href="#top" class="brand">
+        <span class="yy"><i class="fa-solid fa-yin-yang"></i></span>
+        <span class="brand-name">YinYang <em>Store</em></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#products">Ürünler</a>
+        <a href="#how">Nasıl Çalışır</a>
+        <a href="#team">Ekip</a>
+        <a href="#reviews">Yorumlar</a>
+        <a href="#faq">S.S.S</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-ghost" data-action="open-admin" id="btn-admin" hidden><i class="fa-solid fa-sliders"></i><span>Panel</span></button>
+        <button class="btn btn-ghost icon-btn" data-action="open-cart" title="Sepet">
+          <i class="fa-solid fa-cart-shopping"></i><span id="cart-badge" class="badge" hidden>0</span>
+        </button>
+        <button class="btn btn-light" data-action="open-auth" id="btn-auth"><i class="fa-solid fa-lock"></i><span id="btn-auth-text">Yönetici</span></button>
+        <button class="btn btn-ghost icon-btn mobile-only" data-action="toggle-menu"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="#products">Ürünler</a><a href="#how">Nasıl Çalışır</a><a href="#team">Ekip</a><a href="#reviews">Yorumlar</a><a href="#faq">S.S.S</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="yy-orbit" aria-hidden="true">
+        <div class="yy-big"><i class="fa-solid fa-yin-yang"></i></div>
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+      </div>
+      <div class="container hero-in">
+        <div class="pill reveal"><span class="dot"></span> FiveM · Discord · Web — tek çatı altında</div>
+        <h1 class="hero-title reveal">
+          <span class="line">Sunucunuza</span>
+          <span class="line"><span class="grad">denge</span> ve <span class="grad">güç</span> katın</span>
+        </h1>
+        <p class="hero-sub reveal">
+          Optimize edilmiş FiveM scriptleri, korumalı Discord botları ve web panelleri. Kurulum desteği ve güncellemeler dahil.
+        </p>
+        <div class="hero-cta reveal">
+          <a href="#products" class="btn btn-light btn-lg magnetic"><span>Ürünleri Keşfet</span><i class="fa-solid fa-arrow-down"></i></a>
+          <a href="https://discord.gg/dheWzDWCDZ" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg magnetic"><i class="fa-brands fa-discord"></i><span>Discord'a Katıl</span></a>
+        </div>
+        <div class="hero-stats reveal" id="hero-stats">
+          <div class="stat"><b data-count="0" id="stat-products">0</b><span>Ürün</span></div>
+          <div class="stat"><b data-count="0" id="stat-devs">0</b><span>Geliştirici</span></div>
+          <div class="stat"><b data-count="0" id="stat-reviews">0</b><span>Yorum</span></div>
+          <div class="stat"><b id="stat-rating">–</b><span>Ortalama Puan</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>FiveM Scriptleri</span><i class="fa-solid fa-yin-yang"></i><span>Discord Botları</span><i class="fa-solid fa-yin-yang"></i><span>Web Panelleri</span><i class="fa-solid fa-yin-yang"></i><span>Kurulum Desteği</span><i class="fa-solid fa-yin-yang"></i><span>Ücretsiz Güncelleme</span><i class="fa-solid fa-yin-yang"></i>
+        <span>FiveM Scriptleri</span><i class="fa-solid fa-yin-yang"></i><span>Discord Botları</span><i class="fa-solid fa-yin-yang"></i><span>Web Panelleri</span><i class="fa-solid fa-yin-yang"></i><span>Kurulum Desteği</span><i class="fa-solid fa-yin-yang"></i><span>Ücretsiz Güncelleme</span><i class="fa-solid fa-yin-yang"></i>
+      </div>
+    </div>
+
+    <!-- ÜRÜNLER -->
+    <section id="products" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-box-open"></i> Mağaza</div>
+            <h2>Ürün Kataloğu</h2>
+            <p>Beğendiğiniz ürünü sepete ekleyin veya doğrudan satın alın. Satın al, sizi Discord sunucumuza yönlendirir.</p>
+          </div>
+          <div class="head-actions">
+            <button class="btn btn-light" data-action="add-product" id="btn-add-product" hidden><i class="fa-solid fa-plus"></i> Yeni Ürün</button>
+          </div>
+        </div>
+
+        <div class="toolbar reveal">
+          <div class="tabs" id="category-tabs">
+            <button class="tab active" data-cat="all">Tümü</button>
+            <button class="tab" data-cat="fivem"><i class="fa-solid fa-gamepad"></i> FiveM</button>
+            <button class="tab" data-cat="discord"><i class="fa-brands fa-discord"></i> Discord</button>
+            <button class="tab" data-cat="web"><i class="fa-solid fa-code"></i> Web</button>
+          </div>
+          <div class="toolbar-right">
+            <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" type="text" placeholder="Ara..." autocomplete="off"></div>
+            <select id="sort" class="select">
+              <option value="new">En yeni</option>
+              <option value="price-asc">Fiyat: artan</option>
+              <option value="price-desc">Fiyat: azalan</option>
+              <option value="rating">En yüksek puan</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="products-grid" class="grid products"></div>
+        <div id="products-empty" class="empty" hidden></div>
+      </div>
+    </section>
+
+    <!-- NASIL ÇALIŞIR -->
+    <section id="how" class="section alt">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-route"></i> Süreç</div>
+            <h2>4 adımda teslimat</h2>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><span class="step-no">01</span><i class="fa-solid fa-magnifying-glass"></i><h3>Seç</h3><p>Kataloğdan ihtiyacınıza uygun ürünü bulun.</p></div>
+          <div class="step reveal"><span class="step-no">02</span><i class="fa-solid fa-cart-plus"></i><h3>Sepete ekle</h3><p>Birden fazla ürünü sepette toplayın veya tek tıkla satın alın.</p></div>
+          <div class="step reveal"><span class="step-no">03</span><i class="fa-brands fa-discord"></i><h3>Discord'da sipariş</h3><p>Sipariş kodunuzla Discord sunucumuzda talep açın.</p></div>
+          <div class="step reveal"><span class="step-no">04</span><i class="fa-solid fa-circle-check"></i><h3>Teslim al</h3><p>Dosyalar ve kurulum rehberi size iletilir.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EKİP -->
+    <section id="team" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-users"></i> Ekip</div>
+            <h2>Geliştirici Ekibi</h2>
+            <p>Profiller Discord kimliklerinden canlı çekilir. E-posta adresleri hiçbir zaman gösterilmez.</p>
+          </div>
+          <div class="head-actions">
+            <button class="btn btn-light" data-action="add-dev" id="btn-add-dev" hidden><i class="fa-solid fa-user-plus"></i> Geliştirici Ekle</button>
+          </div>
+        </div>
+        <div id="team-grid" class="grid team"></div>
+        <div id="team-empty" class="empty" hidden></div>
+      </div>
+    </section>
+
+    <!-- YORUMLAR -->
+    <section id="reviews" class="section alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow"><i class="fa-solid fa-comments"></i> Topluluk</div>
+            <h2>Müşteri Yorumları</h2>
+            <p>Herkes yorum bırakabilir. Yönetim uygunsuz yorumları kaldırabilir.</p>
+          </div>
+          <div class="head-actions">
+            <button class="btn btn-light" data-action="write-review"><i class="fa-solid fa-pen"></i> Yorum Yaz</button>
+          </div>
+        </div>
+        <div id="reviews-grid" class="grid reviews"></div>
+        <div id="reviews-empty" class="empty" hidden></div>
+      </div>
+    </section>
+
+    <!-- SSS -->
+    <section id="faq" class="section">
+      <div class="container narrow">
+        <div class="section-head center reveal"><div><div class="eyebrow"><i class="fa-solid fa-circle-question"></i> Yardım</div><h2>Sık Sorulan Sorular</h2></div></div>
+        <div class="faq">
+          <details class="faq-item reveal"><summary>Satın alma nasıl işliyor?</summary><p>Ürün kartındaki <b>Satın Al</b> butonu bir sipariş kodu oluşturur, panonuza kopyalar ve sizi <a href="https://discord.gg/dheWzDWCDZ" target="_blank" rel="noopener noreferrer">Discord sunucumuza</a> yönlendirir. Orada destek talebi açıp kodu paylaşırsınız.</p></details>
+          <details class="faq-item reveal"><summary>Hesap açmam gerekiyor mu?</summary><p>Hayır. Ürünleri inceleyebilir, sepete ekleyebilir ve yorum bırakabilirsiniz. Üyelik gerekmez.</p></details>
+          <details class="faq-item reveal"><summary>Scriptler hangi altyapılarla çalışır?</summary><p>Ürün sayfasında her scriptin desteklediği altyapı (QBCore, ESX, Qbox vb.) özellik listesinde belirtilir.</p></details>
+          <details class="faq-item reveal"><summary>Geliştirici bilgileri nasıl gösteriliyor?</summary><p>Yalnızca Discord kullanıcı adı, kimliği, rol ve uzmanlık alanı gösterilir. E-posta adresleri sunucuda tutulur ve ziyaretçilere asla gönderilmez.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-sec">
+      <div class="container">
+        <div class="cta reveal">
+          <i class="fa-solid fa-yin-yang cta-yy"></i>
+          <h2>Topluluğa katılın</h2>
+          <p>Duyurular, destek ve özel kampanyalar için Discord sunucumuzdayız.</p>
+          <a class="btn btn-light btn-lg magnetic" href="https://discord.gg/dheWzDWCDZ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> discord.gg/dheWzDWCDZ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-in">
+      <div class="brand"><span class="yy sm"><i class="fa-solid fa-yin-yang"></i></span><span class="brand-name">YinYang <em>Store</em></span></div>
+      <span class="muted">© <span id="year"></span> YinYang Store</span>
+      <a class="toplink" href="https://discord.gg/dheWzDWCDZ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
+    </div>
+  </footer>
+
+  <!-- ============ MODALLER ============ -->
+
+  <!-- Yönetici girişi -->
+  <div class="modal" id="modal-auth" hidden>
+    <div class="modal-box sm">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <div class="auth-head">
+        <span class="yy"><i class="fa-solid fa-yin-yang"></i></span>
+        <h3>Yönetici Girişi</h3>
+        <p>Kullanıcı adı ve şifrenizle giriş yapın.</p>
+      </div>
+      <form id="form-login" class="form">
+        <label>Kullanıcı adı<input class="input" id="login-user" autocomplete="username" required></label>
+        <label>Şifre<input class="input" id="login-pass" type="password" autocomplete="current-password" required></label>
+        <button class="btn btn-light w-full" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Ürün detay -->
+  <div class="modal" id="modal-detail" hidden>
+    <div class="modal-box lg">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <div id="detail-body"></div>
+    </div>
+  </div>
+
+  <!-- Sepet -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head"><h3><i class="fa-solid fa-cart-shopping"></i> Sepetim</h3><button class="modal-x static" data-action="close-cart"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="drawer-body" id="cart-list"></div>
+    <div class="drawer-foot">
+      <div class="row"><span class="muted">Toplam</span><b id="cart-total">0 ₺</b></div>
+      <button class="btn btn-light w-full" data-action="checkout"><i class="fa-brands fa-discord"></i> Discord'da Siparişi Tamamla</button>
+      <button class="btn btn-ghost w-full" data-action="clear-cart">Sepeti temizle</button>
+    </div>
+  </aside>
+
+  <!-- Yorum -->
+  <div class="modal" id="modal-review" hidden>
+    <div class="modal-box sm">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="review-title">Yorum Yaz</h3>
+      <form id="form-review" class="form">
+        <input type="hidden" id="rv-product-id">
+        <label>Adınız<input class="input" id="rv-author" maxlength="40" required placeholder="Adınız veya Discord adınız"></label>
+        <label>Ürün<select class="input" id="rv-product"></select></label>
+        <label>Puan
+          <div class="stars-input" id="rv-stars">
+            <i class="fa-solid fa-star on" data-v="1"></i><i class="fa-solid fa-star on" data-v="2"></i><i class="fa-solid fa-star on" data-v="3"></i><i class="fa-solid fa-star on" data-v="4"></i><i class="fa-solid fa-star on" data-v="5"></i>
+          </div>
+        </label>
+        <label>Yorumunuz<textarea class="input" id="rv-comment" rows="4" maxlength="800" required placeholder="Deneyiminizi paylaşın..."></textarea></label>
+        <button class="btn btn-light w-full" type="submit">Gönder</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Ürün formu -->
+  <div class="modal" id="modal-product" hidden>
+    <div class="modal-box">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="pf-heading">Yeni Ürün</h3>
+      <form id="form-product" class="form">
+        <input type="hidden" id="pf-id">
+        <label>Başlık<input class="input" id="pf-title" required maxlength="120"></label>
+        <div class="two">
+          <label>Kategori<select class="input" id="pf-category"><option value="fivem">FiveM Script</option><option value="discord">Discord Bot</option><option value="web">Web & Panel</option></select></label>
+          <label>Fiyat (₺)<input class="input" id="pf-price" type="number" min="0" step="1" required></label>
+        </div>
+        <label>Görsel URL<input class="input" id="pf-image" type="url" placeholder="https://..."></label>
+        <label>Açıklama<textarea class="input" id="pf-desc" rows="3" maxlength="1000" required></textarea></label>
+        <label>Özellikler <small class="muted">(virgülle ayırın)</small><input class="input" id="pf-features"></label>
+        <button class="btn btn-light w-full" type="submit">Kaydet</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Geliştirici formu -->
+  <div class="modal" id="modal-dev" hidden>
+    <div class="modal-box sm">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <h3>Geliştirici Ekle</h3>
+      <div class="notice"><i class="fa-solid fa-shield"></i> E-posta gizli saklanır; yalnızca Discord profili gösterilir.</div>
+      <form id="form-dev" class="form">
+        <label>Discord ID<input class="input" id="df-id" required pattern="[0-9]{17,20}" inputmode="numeric"></label>
+        <label>E-posta <small class="muted">(gizli)</small><input class="input" id="df-email" type="email" required></label>
+        <label>Rol / Ünvan<input class="input" id="df-role" required maxlength="80"></label>
+        <label>Uzmanlık<input class="input" id="df-spec" maxlength="200"></label>
+        <label>İletişim notu <small class="muted">(herkese görünür, opsiyonel)</small><input class="input" id="df-contact" maxlength="200"></label>
+        <button class="btn btn-light w-full" type="submit">Ekle</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Yönetim paneli -->
+  <div class="modal" id="modal-admin" hidden>
+    <div class="modal-box xl">
+      <button class="modal-x" data-close><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-head">
+        <span class="yy sm"><i class="fa-solid fa-sliders"></i></span>
+        <div><h3>Yönetim Paneli</h3><small class="muted" id="admin-who"></small></div>
+      </div>
+      <div class="tabs scroll" id="admin-tabs">
+        <button class="tab active" data-atab="products"><i class="fa-solid fa-box-open"></i> Ürünler</button>
+        <button class="tab" data-atab="team"><i class="fa-solid fa-users"></i> Ekip</button>
+        <button class="tab" data-atab="reviews"><i class="fa-solid fa-comments"></i> Yorumlar</button>
+        <button class="tab" data-atab="orders"><i class="fa-solid fa-receipt"></i> Siparişler</button>
+        <button class="tab" data-atab="backup"><i class="fa-solid fa-database"></i> Veri / Yedek</button>
+      </div>
+      <div id="admin-content" class="admin-content"></div>
+    </div>
+  </div>
+
+  <div id="toasts"></div>
+  <script src="app.js"></script>
+</body>
+</html>
